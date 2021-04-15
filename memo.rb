@@ -23,11 +23,14 @@ if memo_type == 1 then
   end
   # コマンドから入力した値を取得して新規ファイルが作成
   p "メモしたい内容を記入してください"
-  p "入力完了したらctrl + D or Enter"
-  input = gets.chomp
-  CSV.open(newFile,"w") do |csv|
-    csv << [input]
+  p "入力完了したらctrl + D"
+  inputs = readlines
+  File.open(newFile,"w") do |csv|
+    inputs.each do |input|
+      csv << input
+    end
   end
+  p newFile + "が作成されました"
 #####既存メモの追記する処理#####
 elsif memo_type == 2 then
   puts "csvファイル一覧"
@@ -43,11 +46,14 @@ elsif memo_type == 2 then
   p "編集したいファイルを拡張子をのぞいて入力してください"
   editFile = gets.chomp+".csv"
   p editFile + "に入力した文字を追記します"
-  p "入力完了したらctrl + D or Enter"
-  input = gets.chomp
-  CSV.open(editFile, mode = "a+") do |csv|
-    csv << [input]
+  p "入力完了したらctrl + D"
+  inputs = readlines
+  File.open(editFile,"a") do |csv|
+    inputs.each do |input|
+      csv << input
+    end
   end
+  p editFile + "が編集されました"
 #####正しい値が入力されなかった時の処理#####
 else
   p "ruby memo.rbを再度入力して半角英数で1or2を入力してください"
